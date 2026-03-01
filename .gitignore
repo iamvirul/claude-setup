@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+**/.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Backup directories (created by setup.sh runs)
+.claude_backup_*/
+
+# Secrets (never commit)
+.env
+.env.*
+*.pem
+*.key
+credentials.json
