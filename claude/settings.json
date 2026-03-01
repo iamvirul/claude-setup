@@ -75,6 +75,10 @@
           {
             "type": "command",
             "command": "~/.claude/hooks/post-edit.sh"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/sync-claude-setup.sh"
           }
         ]
       }
