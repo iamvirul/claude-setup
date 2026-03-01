@@ -5,15 +5,14 @@ One-command Claude Code optimization for any machine. Installs a production-grad
 ## Quick Install
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/claude-setup.git ~/claude-setup
+git clone https://github.com/iamvirul/claude-setup.git ~/claude-setup
 cd ~/claude-setup && ./setup.sh
 ```
 
-Or directly from GitHub (once published):
+Or directly from GitHub:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/claude-setup/main/setup.sh \
-  | bash -s -- --repo https://github.com/YOUR_USERNAME/claude-setup
+curl -fsSL https://raw.githubusercontent.com/iamvirul/claude-setup/main/setup.sh | bash
 ```
 
 > **Requires**: bash 3.2+, python3 (for settings merge)
