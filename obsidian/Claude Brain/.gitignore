@@ -1,0 +1,14 @@
+# Obsidian workspace state (machine-specific, not worth syncing)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/plugins/*/data.json
+
+# Obsidian cache
+.obsidian/cache
+
+# macOS
+.DS_Store
+.trash/
+
+# Temporary files
+*.tmp

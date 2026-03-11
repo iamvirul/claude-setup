@@ -114,7 +114,7 @@ OBSIDIAN_BRAIN="$HOME/Documents/Obsidian/Claude Brain"
 REPO_OBSIDIAN="$SCRIPT_DIR/obsidian/Claude Brain"
 
 if [[ -d "$OBSIDIAN_BRAIN" ]]; then
-  echo -e "  ${YELLOW}⚠${RESET}  Vault already exists — skipping (preserving existing notes)"
+  echo -e "  ${YELLOW}⚠${RESET}  Vault already exists — preserving existing notes"
 else
   mkdir -p \
     "$OBSIDIAN_BRAIN/Skills" \
@@ -123,15 +123,51 @@ else
     "$OBSIDIAN_BRAIN/Projects" \
     "$OBSIDIAN_BRAIN/Templates"
 
-  cp "$REPO_OBSIDIAN/Index.md"                            "$OBSIDIAN_BRAIN/Index.md"
-  cp "$REPO_OBSIDIAN/Skills/Skills Index.md"             "$OBSIDIAN_BRAIN/Skills/Skills Index.md"
-  cp "$REPO_OBSIDIAN/Patterns/Patterns Index.md"         "$OBSIDIAN_BRAIN/Patterns/Patterns Index.md"
-  cp "$REPO_OBSIDIAN/Debugging/Debugging Index.md"       "$OBSIDIAN_BRAIN/Debugging/Debugging Index.md"
-  cp "$REPO_OBSIDIAN/Projects/Projects Index.md"         "$OBSIDIAN_BRAIN/Projects/Projects Index.md"
-  cp "$REPO_OBSIDIAN/Templates/"*.md                     "$OBSIDIAN_BRAIN/Templates/"
+  cp "$REPO_OBSIDIAN/Index.md"                        "$OBSIDIAN_BRAIN/Index.md"
+  cp "$REPO_OBSIDIAN/Skills/Skills Index.md"          "$OBSIDIAN_BRAIN/Skills/Skills Index.md"
+  cp "$REPO_OBSIDIAN/Patterns/Patterns Index.md"      "$OBSIDIAN_BRAIN/Patterns/Patterns Index.md"
+  cp "$REPO_OBSIDIAN/Debugging/Debugging Index.md"    "$OBSIDIAN_BRAIN/Debugging/Debugging Index.md"
+  cp "$REPO_OBSIDIAN/Projects/Projects Index.md"      "$OBSIDIAN_BRAIN/Projects/Projects Index.md"
+  cp "$REPO_OBSIDIAN/Templates/"*.md                  "$OBSIDIAN_BRAIN/Templates/"
+  cp "$REPO_OBSIDIAN/.gitignore"                      "$OBSIDIAN_BRAIN/.gitignore"
 
   echo -e "  ${GREEN}✓${RESET} Vault created: ~/Documents/Obsidian/Claude Brain/"
   echo -e "  ${GREEN}✓${RESET} Skills/, Patterns/, Debugging/, Projects/, Templates/"
+fi
+echo ""
+
+# ── Link Brain to private GitHub repo ────────────────────────────────────────
+echo -e "${BOLD}Linking Brain to private GitHub repo...${RESET}"
+
+if [[ -d "$OBSIDIAN_BRAIN/.git" ]]; then
+  EXISTING_REMOTE=$(cd "$OBSIDIAN_BRAIN" && git remote get-url origin 2>/dev/null || echo "not set")
+  echo -e "  ${GREEN}✓${RESET} Already linked → ${EXISTING_REMOTE}"
+else
+  echo ""
+  echo -e "  Brain notes auto-commit and push after every /brain-sync."
+  echo -e "  Create a ${BOLD}private${RESET} repo on GitHub first, then paste the URL below."
+  echo -e "  (Leave blank to skip — you can set this up manually later)"
+  echo ""
+  echo -n "  Private repo URL: "
+  read -r BRAIN_REPO_URL
+
+  if [[ -n "$BRAIN_REPO_URL" ]]; then
+    # Ensure .gitignore is in place
+    cp "$REPO_OBSIDIAN/.gitignore" "$OBSIDIAN_BRAIN/.gitignore"
+    cd "$OBSIDIAN_BRAIN"
+    git init -b main --quiet
+    git remote add origin "$BRAIN_REPO_URL"
+    git add -A
+    git commit -m "brain: initial vault setup" --quiet
+    git push -u origin main --quiet
+    cd - > /dev/null
+    echo -e "  ${GREEN}✓${RESET} Brain linked and pushed → ${BRAIN_REPO_URL}"
+  else
+    echo -e "  ${YELLOW}⚠${RESET}  Skipped. Set it up later:"
+    echo "       cd ~/Documents/Obsidian/Claude\\ Brain"
+    echo "       git init -b main && git remote add origin YOUR_PRIVATE_URL"
+    echo "       git add -A && git commit -m 'brain: initial' && git push -u origin main"
+  fi
 fi
 echo ""
 
@@ -235,6 +271,7 @@ check_executable "$CLAUDE_DIR/hooks/validate-bash.sh"
 check_executable "$CLAUDE_DIR/hooks/post-edit.sh"
 check_executable "$CLAUDE_DIR/hooks/sync-claude-setup.sh"
 check_executable "$CLAUDE_DIR/hooks/brain-capture.sh"
+check_executable "$CLAUDE_DIR/hooks/sync-brain.sh"
 check_file "$CLAUDE_DIR/skills/review-pr/SKILL.md"
 check_file "$CLAUDE_DIR/skills/commit/SKILL.md"
 check_file "$CLAUDE_DIR/skills/debug/SKILL.md"
@@ -257,7 +294,7 @@ echo ""
 echo -e "${BOLD}What's active:${RESET}"
 echo "  • CLAUDE.md           — Staff engineer mindset + architecture principles"
 echo "  • rules/ (5)          — Code quality, security, testing, observability, architecture"
-echo "  • hooks/ (4)          — Bash validation, post-edit hints, auto-sync to GitHub, brain capture"
+echo "  • hooks/ (5)          — Bash validation, post-edit hints, auto-sync to GitHub, brain capture, brain push"
 echo "  • skills/ (4)         — /review-pr, /commit, /debug, /brain-sync"
 echo "  • agents/ (1)         — code-reviewer (read-only subagent)"
 echo "  • Obsidian Brain       — ~/Documents/Obsidian/Claude Brain/"
