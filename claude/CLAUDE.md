@@ -183,7 +183,11 @@ Write a note when you've done any of the following:
 1. Check for existing note first: `Glob("~/Documents/Obsidian/Claude Brain/**/*.md")`
 2. If exists → update it. Never duplicate.
 3. Use the templates in `Templates/` — fill every field completely, no placeholders.
-4. Update the category `Index.md` with a link to the new note.
+4. Update the category index file with a link to the new note:
+   - Skills → `Skills/Skills Index.md`
+   - Patterns → `Patterns/Patterns Index.md`
+   - Debugging → `Debugging/Debugging Index.md`
+   - Projects → `Projects/Projects Index.md`
 5. Frontmatter required: `type`, `tags` (include language + topic), `created` (YYYY-MM-DD), `project`.
 
 ### Trigger: `/brain-sync`
