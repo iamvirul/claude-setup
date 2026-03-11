@@ -63,6 +63,7 @@ mkdir -p \
   "$CLAUDE_DIR/skills/review-pr" \
   "$CLAUDE_DIR/skills/commit" \
   "$CLAUDE_DIR/skills/debug" \
+  "$CLAUDE_DIR/skills/brain-sync" \
   "$CLAUDE_DIR/agents"
 echo -e "  ${GREEN}✓${RESET} Directories ready"
 echo ""
@@ -81,16 +82,22 @@ for rule_file in architecture code-quality security testing observability; do
 done
 
 # Hooks
-cp "$REPO_CLAUDE_DIR/hooks/validate-bash.sh" "$CLAUDE_DIR/hooks/validate-bash.sh"
-cp "$REPO_CLAUDE_DIR/hooks/post-edit.sh" "$CLAUDE_DIR/hooks/post-edit.sh"
-cp "$REPO_CLAUDE_DIR/hooks/sync-claude-setup.sh" "$CLAUDE_DIR/hooks/sync-claude-setup.sh"
-chmod +x "$CLAUDE_DIR/hooks/validate-bash.sh" "$CLAUDE_DIR/hooks/post-edit.sh" "$CLAUDE_DIR/hooks/sync-claude-setup.sh"
+cp "$REPO_CLAUDE_DIR/hooks/validate-bash.sh"      "$CLAUDE_DIR/hooks/validate-bash.sh"
+cp "$REPO_CLAUDE_DIR/hooks/post-edit.sh"           "$CLAUDE_DIR/hooks/post-edit.sh"
+cp "$REPO_CLAUDE_DIR/hooks/sync-claude-setup.sh"   "$CLAUDE_DIR/hooks/sync-claude-setup.sh"
+cp "$REPO_CLAUDE_DIR/hooks/brain-capture.sh"       "$CLAUDE_DIR/hooks/brain-capture.sh"
+chmod +x \
+  "$CLAUDE_DIR/hooks/validate-bash.sh" \
+  "$CLAUDE_DIR/hooks/post-edit.sh" \
+  "$CLAUDE_DIR/hooks/sync-claude-setup.sh" \
+  "$CLAUDE_DIR/hooks/brain-capture.sh"
 echo -e "  ${GREEN}✓${RESET} hooks/validate-bash.sh (executable)"
 echo -e "  ${GREEN}✓${RESET} hooks/post-edit.sh (executable)"
 echo -e "  ${GREEN}✓${RESET} hooks/sync-claude-setup.sh (executable)"
+echo -e "  ${GREEN}✓${RESET} hooks/brain-capture.sh (executable)"
 
 # Skills
-for skill in review-pr commit debug; do
+for skill in review-pr commit debug brain-sync; do
   cp "$REPO_CLAUDE_DIR/skills/${skill}/SKILL.md" "$CLAUDE_DIR/skills/${skill}/SKILL.md"
   echo -e "  ${GREEN}✓${RESET} skills/${skill}/SKILL.md"
 done
@@ -98,6 +105,34 @@ done
 # Agents
 cp "$REPO_CLAUDE_DIR/agents/code-reviewer.md" "$CLAUDE_DIR/agents/code-reviewer.md"
 echo -e "  ${GREEN}✓${RESET} agents/code-reviewer.md"
+echo ""
+
+# ── Obsidian Brain vault ──────────────────────────────────────────────────────
+echo -e "${BOLD}Setting up Obsidian Brain vault...${RESET}"
+
+OBSIDIAN_BRAIN="$HOME/Documents/Obsidian/Claude Brain"
+REPO_OBSIDIAN="$SCRIPT_DIR/obsidian/Claude Brain"
+
+if [[ -d "$OBSIDIAN_BRAIN" ]]; then
+  echo -e "  ${YELLOW}⚠${RESET}  Vault already exists — skipping (preserving existing notes)"
+else
+  mkdir -p \
+    "$OBSIDIAN_BRAIN/Skills" \
+    "$OBSIDIAN_BRAIN/Patterns" \
+    "$OBSIDIAN_BRAIN/Debugging" \
+    "$OBSIDIAN_BRAIN/Projects" \
+    "$OBSIDIAN_BRAIN/Templates"
+
+  cp "$REPO_OBSIDIAN/Index.md"              "$OBSIDIAN_BRAIN/Index.md"
+  cp "$REPO_OBSIDIAN/Skills/Index.md"       "$OBSIDIAN_BRAIN/Skills/Index.md"
+  cp "$REPO_OBSIDIAN/Patterns/Index.md"     "$OBSIDIAN_BRAIN/Patterns/Index.md"
+  cp "$REPO_OBSIDIAN/Debugging/Index.md"    "$OBSIDIAN_BRAIN/Debugging/Index.md"
+  cp "$REPO_OBSIDIAN/Projects/Index.md"     "$OBSIDIAN_BRAIN/Projects/Index.md"
+  cp "$REPO_OBSIDIAN/Templates/"*.md        "$OBSIDIAN_BRAIN/Templates/"
+
+  echo -e "  ${GREEN}✓${RESET} Vault created: ~/Documents/Obsidian/Claude Brain/"
+  echo -e "  ${GREEN}✓${RESET} Skills/, Patterns/, Debugging/, Projects/, Templates/"
+fi
 echo ""
 
 # ── Merge settings.json ───────────────────────────────────────────────────────
@@ -199,9 +234,11 @@ check_file "$CLAUDE_DIR/rules/observability.md"
 check_executable "$CLAUDE_DIR/hooks/validate-bash.sh"
 check_executable "$CLAUDE_DIR/hooks/post-edit.sh"
 check_executable "$CLAUDE_DIR/hooks/sync-claude-setup.sh"
+check_executable "$CLAUDE_DIR/hooks/brain-capture.sh"
 check_file "$CLAUDE_DIR/skills/review-pr/SKILL.md"
 check_file "$CLAUDE_DIR/skills/commit/SKILL.md"
 check_file "$CLAUDE_DIR/skills/debug/SKILL.md"
+check_file "$CLAUDE_DIR/skills/brain-sync/SKILL.md"
 check_file "$CLAUDE_DIR/agents/code-reviewer.md"
 echo ""
 
@@ -218,11 +255,18 @@ echo ""
 echo -e "Installed to: ${BOLD}${CLAUDE_DIR}${RESET}"
 echo ""
 echo -e "${BOLD}What's active:${RESET}"
-echo "  • CLAUDE.md       — Staff engineer mindset + architecture principles"
-echo "  • rules/ (5)      — Code quality, security, testing, observability, architecture"
-echo "  • hooks/ (3)      — Bash validation, post-edit formatting hints, auto-sync to GitHub"
-echo "  • skills/ (3)     — /review-pr, /commit, /debug"
-echo "  • agents/ (1)     — code-reviewer (read-only subagent)"
+echo "  • CLAUDE.md           — Staff engineer mindset + architecture principles"
+echo "  • rules/ (5)          — Code quality, security, testing, observability, architecture"
+echo "  • hooks/ (4)          — Bash validation, post-edit hints, auto-sync to GitHub, brain capture"
+echo "  • skills/ (4)         — /review-pr, /commit, /debug, /brain-sync"
+echo "  • agents/ (1)         — code-reviewer (read-only subagent)"
+echo "  • Obsidian Brain       — ~/Documents/Obsidian/Claude Brain/"
+echo ""
+echo -e "${BOLD}Obsidian setup (manual — do this once):${RESET}"
+echo "  1. Open Obsidian → Open vault → ~/Documents/Obsidian"
+echo "  2. Install 'Local REST API' community plugin and enable it"
+echo "  3. Open Graph View (Ctrl+G) to explore your growing knowledge base"
+echo "  4. Type /brain-sync in Claude Code to capture session learnings"
 echo ""
 echo -e "${YELLOW}Restart Claude Code to activate all changes.${RESET}"
 echo ""
