@@ -38,7 +38,8 @@
       "Bash(mv*)",
       "Bash(which*)",
       "Bash(pwd)",
-      "Bash(env)"
+      "Bash(env)",
+      "Bash(find ~/Documents/Obsidian*)"
     ],
     "deny": [
       "Bash(rm -rf /)",
