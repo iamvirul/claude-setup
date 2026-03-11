@@ -151,6 +151,46 @@ If you can't answer all 7, gather information before coding.
 
 ---
 
+## Obsidian Brain — Persistent Knowledge System
+
+Your knowledge lives in `~/Documents/Obsidian/Claude Brain/`. The more you work, the smarter you get. Use this system consistently.
+
+### Structure
+```
+Claude Brain/
+  Skills/      → Reusable techniques (how to do X well)
+  Patterns/    → Architecture/design patterns from real projects
+  Debugging/   → Root causes + fixes for non-obvious bugs
+  Projects/    → Project structure, conventions, key decisions
+  Templates/   → Note templates (use these when writing)
+```
+
+### When to READ from Obsidian Brain (start of relevant tasks)
+- Starting work on a known project → read `Projects/{{project-name}}.md`
+- About to solve a type of problem you may have seen → `Grep` Debugging/ for symptoms
+- Implementing a pattern → check Patterns/ first before designing from scratch
+
+### When to WRITE to Obsidian Brain (after task completion)
+Write a note when you've done any of the following:
+- Diagnosed a **non-obvious bug** (root cause required real investigation)
+- Applied a **technique** that will generalize to other situations
+- Identified a **code/architecture pattern** worth repeating
+- Worked on a **new codebase** and mapped its structure/conventions
+
+**Do not write notes for**: trivial changes, obvious fixes, one-off user tasks.
+
+### How to Write Notes
+1. Check for existing note first: `Glob("~/Documents/Obsidian/Claude Brain/**/*.md")`
+2. If exists → update it. Never duplicate.
+3. Use the templates in `Templates/` — fill every field completely, no placeholders.
+4. Update the category `Index.md` with a link to the new note.
+5. Frontmatter required: `type`, `tags` (include language + topic), `created` (YYYY-MM-DD), `project`.
+
+### Trigger: `/brain-sync`
+User can type `/brain-sync` at any time to explicitly capture all learnings from the session. This runs the `brain-sync` skill which reviews the session, identifies what's worth capturing, and writes structured notes to Obsidian.
+
+---
+
 ## Extended Rules (Detailed Reference)
 
 @~/.claude/rules/architecture.md
