@@ -79,6 +79,10 @@
           {
             "type": "command",
             "command": "~/.claude/hooks/sync-claude-setup.sh"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/brain-capture.sh"
           }
         ]
       }
@@ -94,5 +98,14 @@
         ]
       }
     ]
+  },
+  "availableModels": [
+    "opus",
+    "sonnet",
+    "haiku"
+  ],
+  "enabledPlugins": {
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "claude-mem@thedotmack": true
   }
 }
