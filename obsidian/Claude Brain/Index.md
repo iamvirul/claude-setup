@@ -34,6 +34,7 @@
 
 ## Quick Links
 
-- [[Skills/Index|All Skills]]
-- [[Patterns/Index|All Patterns]]
-- [[Debugging/Index|All Debug Solutions]]
+- [[Skills/Skills Index|All Skills]]
+- [[Patterns/Patterns Index|All Patterns]]
+- [[Debugging/Debugging Index|All Debug Solutions]]
+- [[Projects/Projects Index|All Projects]]

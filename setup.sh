@@ -123,12 +123,12 @@ else
     "$OBSIDIAN_BRAIN/Projects" \
     "$OBSIDIAN_BRAIN/Templates"
 
-  cp "$REPO_OBSIDIAN/Index.md"              "$OBSIDIAN_BRAIN/Index.md"
-  cp "$REPO_OBSIDIAN/Skills/Index.md"       "$OBSIDIAN_BRAIN/Skills/Index.md"
-  cp "$REPO_OBSIDIAN/Patterns/Index.md"     "$OBSIDIAN_BRAIN/Patterns/Index.md"
-  cp "$REPO_OBSIDIAN/Debugging/Index.md"    "$OBSIDIAN_BRAIN/Debugging/Index.md"
-  cp "$REPO_OBSIDIAN/Projects/Index.md"     "$OBSIDIAN_BRAIN/Projects/Index.md"
-  cp "$REPO_OBSIDIAN/Templates/"*.md        "$OBSIDIAN_BRAIN/Templates/"
+  cp "$REPO_OBSIDIAN/Index.md"                            "$OBSIDIAN_BRAIN/Index.md"
+  cp "$REPO_OBSIDIAN/Skills/Skills Index.md"             "$OBSIDIAN_BRAIN/Skills/Skills Index.md"
+  cp "$REPO_OBSIDIAN/Patterns/Patterns Index.md"         "$OBSIDIAN_BRAIN/Patterns/Patterns Index.md"
+  cp "$REPO_OBSIDIAN/Debugging/Debugging Index.md"       "$OBSIDIAN_BRAIN/Debugging/Debugging Index.md"
+  cp "$REPO_OBSIDIAN/Projects/Projects Index.md"         "$OBSIDIAN_BRAIN/Projects/Projects Index.md"
+  cp "$REPO_OBSIDIAN/Templates/"*.md                     "$OBSIDIAN_BRAIN/Templates/"
 
   echo -e "  ${GREEN}✓${RESET} Vault created: ~/Documents/Obsidian/Claude Brain/"
   echo -e "  ${GREEN}✓${RESET} Skills/, Patterns/, Debugging/, Projects/, Templates/"
