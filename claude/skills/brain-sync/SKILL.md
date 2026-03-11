@@ -52,8 +52,16 @@ For each learning worth capturing:
 
 ### Step 4 — Update the relevant Index
 
-After writing each note, append a link to the category's `Index.md`:
-- `[[../Skills/note-name|Human Readable Title]]`
+After writing each note, append a wikilink line to the category's index file:
+
+| Category | Index file to update |
+|----------|---------------------|
+| Skill    | `~/Documents/Obsidian/Claude Brain/Skills/Skills Index.md` |
+| Pattern  | `~/Documents/Obsidian/Claude Brain/Patterns/Patterns Index.md` |
+| Debug    | `~/Documents/Obsidian/Claude Brain/Debugging/Debugging Index.md` |
+| Project  | `~/Documents/Obsidian/Claude Brain/Projects/Projects Index.md` |
+
+Append: `- [[note-filename|Human Readable Title]]`
 
 ### Step 5 — Report what was captured
 
