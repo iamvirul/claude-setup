@@ -1,5 +1,5 @@
 {
-  "model": "sonnet",
+  "model": "claude-opus-4-5-20251101",
   "effortLevel": "medium",
   "autoMemoryEnabled": true,
   "permissions": {
@@ -84,10 +84,6 @@
           {
             "type": "command",
             "command": "~/.claude/hooks/brain-capture.sh"
-          },
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/sync-brain.sh"
           }
         ]
       }
@@ -110,7 +106,7 @@
     "haiku"
   ],
   "enabledPlugins": {
-    "rust-analyzer-lsp@claude-plugins-official": true,
-    "claude-mem@thedotmack": true
+    "jdtls-lsp@claude-plugins-official": true,
+    "api-docs@iamvirul-plugins": true
   }
 }
